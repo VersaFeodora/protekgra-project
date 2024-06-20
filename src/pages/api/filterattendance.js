@@ -2,22 +2,32 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { BigQuery } from '@google-cloud/bigquery';
-import { parseISO } from 'date-fns';
+import { parse, format } from 'date-fns';
 
 const bigquery = new BigQuery({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   projectId: 'quick-pointer-414903', // Replace with your Google Cloud Project ID
 });
 
+const parseAndFormatDate = (dateString) => {
+    // Parse the input date string
+    const parsedDate = parse(dateString, 'yyyy-MM-dd HH:mm:ss.SSS', new Date());
+  
+    // Format the date to the desired format
+    return format(parsedDate, "yyyy-MM-dd'T'HH:mm:ss.SSSX");
+  };
+
 export const config = {
     runtime: 'nodejs',
   };
 
 export default async function handler(req, res) {
+    
+
     try {
         const { before, after } = req.body;
-        const beforeDate = parseISO(before);
-        const afterDate = parseISO(after);
+        const beforeDate = parseAndFormatDate(before);
+        const afterDate = parseAndFormatDate(after);
         const query = `SELECT * FROM (
   SELECT * FROM lecturer_attendance.attendance
 INNER JOIN lecturer_attendance.device USING (macAddress)
@@ -34,8 +44,6 @@ LIMIT 1000`; // Update with your actual dataset
             after: afterDate,
           },
         };
-        console.log(beforeDate);
-        console.log(afterDate);
         const [rows] = await bigquery.query(options);
         res.status(200).json(rows);
       } catch (error) {

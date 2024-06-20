@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useRouter } from "next/navigation";
 import { deleteCookie } from 'cookies-next';
 

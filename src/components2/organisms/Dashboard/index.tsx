@@ -45,6 +45,10 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetchLecturerData();
+    const intervalId = setInterval(fetchLecturerData, 1000); // Fetch data every 60 seconds
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -54,7 +58,9 @@ const Dashboard: React.FC = () => {
       </div>
       <div className="mt-4 grid grid-cols-4 gap-4 2xl:mt-9 2xl:gap-7.5">
       {lecturerData.map((data, index) => (
-        <LecturerCard data={data} />
+        <div key={index}>
+          <LecturerCard data={data} />
+        </div>
       ))}
       </div>
     </>
@@ -62,3 +68,7 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+function fetchGraphData() {
+  throw new Error("Function not implemented.");
+}
+

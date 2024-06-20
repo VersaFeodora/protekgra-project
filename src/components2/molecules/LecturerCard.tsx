@@ -51,13 +51,15 @@ export default function LecturerCard({data}:any) {
             <div className="rounded-lg max-w-sm rounded overflow-hidden shadow-lg bg-white dark:bg-gray-dark">
             <div className="flex justify-center">
             {url ? (
-              <img
+              <picture>
+                <img
                 className="w-25 h-25 rounded-full m-3"
                 src={url} // Ensure `url` is always a string when assigned
                 width={500}
                 height={500}
                 alt="Picture of the author"
               />
+              </picture>
             ) : (
               <div className="w-25 h-25 rounded-full m-3 bg-gray-200"></div>
             )}
@@ -89,13 +91,15 @@ export default function LecturerCard({data}:any) {
               <div className="max-w-sm w-full lg:max-w-full lg:flex grid grid-col-6 gap-4">
               <div className="col-span-2">
               {url ? (
-              <img
+              <picture>
+                <img
                 className="w-50 h-50 rounded-full m-3"
                 src={url} // Ensure `url` is always a string when assigned
                 width={500}
                 height={500}
                 alt="Picture of the author"
               />
+              </picture>
             ) : (
               <div className="w-50 h-50 rounded-full m-3 bg-gray-200"></div>
             )}
